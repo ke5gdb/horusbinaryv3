@@ -1,3 +1,4 @@
 marimo
 asn1tools
 requests
+coverage
