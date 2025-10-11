@@ -77,11 +77,16 @@ def _(mo):
         "longitude": -23.344589499,
         "altitudeMeters": 23000,
 
-        "velocityHorizontalMetersPerSecond": 200,
+        "velocityHorizontalKilometersPerHour": 200,
         "gnssSatellitesVisible": 18,
 
-        "temperatureCelsius": [-120, 20],
-        "milliVolts": [2300],
+        "temperatureCelsius": {
+            "internal": 10,
+            "external": 20
+        },
+        "milliVolts": {
+            "battery": 2300
+        },
 
         "ascentRateCentimetersPerSecond": 1080,
         "humidityPercentage": [10],

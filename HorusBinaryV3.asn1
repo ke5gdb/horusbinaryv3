@@ -35,6 +35,28 @@ AdditionalSensorType ::= SEQUENCE {
 -- we limit to 4 additional sensor types to lower out used bits
 AdditionalSensors ::= SEQUENCE(SIZE(1..4)) OF AdditionalSensorType
 
+TemperatureSensors ::= SEQUENCE {
+    internal [0] EXPLICIT INTEGER (-127..127) OPTIONAL, -- C
+    external [1] EXPLICIT INTEGER (-127..127) OPTIONAL, -- C
+    other1   [2] EXPLICIT INTEGER (-127..127) OPTIONAL, -- C
+    other2   [3] EXPLICIT INTEGER (-127..127) OPTIONAL, -- C
+    other3   [4] EXPLICIT INTEGER (-127..127) OPTIONAL, -- C
+    other4   [5] EXPLICIT INTEGER (-127..127) OPTIONAL, -- C
+    other5   [6] EXPLICIT INTEGER (-127..127) OPTIONAL, -- C
+    other6   [7] EXPLICIT INTEGER (-127..127) OPTIONAL -- C
+}
+
+MilliVoltSensors ::= SEQUENCE {
+    battery  [0] EXPLICIT INTEGER (0..16383) OPTIONAL, -- millivolts
+    solar    [1] EXPLICIT INTEGER (0..16383) OPTIONAL, -- millivolts
+    payload  [2] EXPLICIT INTEGER (0..16383) OPTIONAL, -- millivolts
+    other1   [3] EXPLICIT INTEGER (0..16383) OPTIONAL, -- millivolts
+    other2   [4] EXPLICIT INTEGER (0..16383) OPTIONAL, -- millivolts
+    other3   [5] EXPLICIT INTEGER (0..16383) OPTIONAL, -- millivolts
+    other4   [6] EXPLICIT INTEGER (0..16383) OPTIONAL, -- millivolts
+    other5   [7] EXPLICIT INTEGER (0..16383) OPTIONAL  -- millivolts
+}
+
 Telemetry ::= SEQUENCE {
     -- required fields
     payloadCallsign     [1] EXPLICIT IA5String (FROM("-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")^SIZE (1..15)),
@@ -54,17 +76,17 @@ Telemetry ::= SEQUENCE {
     extraSensors            [7] EXPLICIT AdditionalSensors OPTIONAL,
  
     -- additional fields that would be unlikely to need to be sequences
-    velocityHorizontalMetersPerSecond   [8] EXPLICIT INTEGER (0..255)    OPTIONAL, -- m/s
-    gnssSatellitesVisible               [9] EXPLICIT INTEGER (0..31)     OPTIONAL, -- note that the
+    velocityHorizontalKilometersPerHour   [8] EXPLICIT INTEGER (0..512)    OPTIONAL, -- km/hr
+    gnssSatellitesVisible                 [9] EXPLICIT INTEGER (0..31)     OPTIONAL, -- note that the
                                                   -- power mode can now be expressed in bits below
-    ascentRateCentimetersPerSecond     [10] EXPLICIT INTEGER (-32767..32767)                    OPTIONAL, -- cm/s
-    pressurehPa                        [11] EXPLICIT INTEGER (0..1200)     OPTIONAL, -- hPa
+    ascentRateCentimetersPerSecond       [10] EXPLICIT INTEGER (-32767..32767)                    OPTIONAL, -- cm/s
+    pressurehPa                          [11] EXPLICIT INTEGER (0..1200)     OPTIONAL, -- hPa
 
 
     -- additional but fairly common fields so we make them explicit
-    temperatureCelsius         [12] EXPLICIT SEQUENCE(SIZE(1..8)) OF INTEGER (-127..127)   OPTIONAL, -- C
+    temperatureCelsius         [12] EXPLICIT TemperatureSensors   OPTIONAL, -- C
     humidityPercentage         [13] EXPLICIT SEQUENCE(SIZE(1..8)) OF INTEGER (0..100)     OPTIONAL, -- %
-    milliVolts                 [14] EXPLICIT SEQUENCE(SIZE(1..8)) OF INTEGER (0..16383)    OPTIONAL, -- 
+    milliVolts                 [14] EXPLICIT MilliVoltSensors     OPTIONAL, -- 
     counts                     [15] EXPLICIT SEQUENCE(SIZE(1..8)) OF INTEGER OPTIONAL,
     
     -- bits - these mostly came from rs41 ng                  

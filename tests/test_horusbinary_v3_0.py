@@ -10,6 +10,7 @@ class TestHorusBinaryV3_0(unittest.TestCase):
 
     # This tests building a payload with practically every feature
     def test_bells_and_whistles(self):
+        self.maxDiff = 4000
         data = { # This is an example packet that will be way too big, but it highlights all the features
             "payloadCallsign": "abcDEF-0123abc-",
             "sequenceNumber": 65535,
@@ -17,13 +18,31 @@ class TestHorusBinaryV3_0(unittest.TestCase):
             "latitude": 90,
             "longitude": -180,
             "altitudeMeters": 50000,
-            "velocityHorizontalMetersPerSecond": 255,
+            "velocityHorizontalKilometersPerHour": 255,
             "gnssSatellitesVisible": 31,
             "ascentRateCentimetersPerSecond": 32767,
             "pressurehPa": 127,
-            "temperatureCelsius": [-127,127,-127,127,-127,127,-127,127],
+            "temperatureCelsius": {
+                "internal": -127,
+                "external": 127,
+                "other1": -127,
+                "other2": 127,
+                "other3": -127,
+                "other4": 127,
+                "other5": -127,
+                "other6": 127
+            },
             "humidityPercentage":[0,100,0,100,0,100,0,100],
-            "milliVolts": [0,16383,0,16383,0,16383,0,16383],
+            "milliVolts": {
+                "battery": 0,
+                "solar": 16383,
+                "payload": 0,
+                "other1": 16383,
+                "other2": 0,
+                "other3": 16383,
+                "other4": 0,
+                "other5": 16383
+                },
             "counts": [1,100,1000,10000,100000,1000000,1000000],
             "safeMode": True,
             "powerSave": False,
@@ -63,13 +82,31 @@ class TestHorusBinaryV3_0(unittest.TestCase):
             "latitude": 90,
             "longitude": -180,
             "altitudeMeters": 50000,
-            "velocityHorizontalMetersPerSecond": 255,
+            "velocityHorizontalKilometersPerHour": 255,
             "gnssSatellitesVisible": 31,
             "ascentRateCentimetersPerSecond": 32767,
             "pressurehPa": 127,
-            "temperatureCelsius": [-127,127,-127,127,-127,127,-127,127],
+            "temperatureCelsius": {
+                "internal": -127,
+                "external": 127,
+                "other1": -127,
+                "other2": 127,
+                "other3": -127,
+                "other4": 127,
+                "other5": -127,
+                "other6": 127
+            },
             "humidityPercentage":[0,100,0,100,0,100,0,100],
-            "milliVolts": [0,16383,0,16383,0,16383,0,16383],
+            "milliVolts": {
+                "battery": 0,
+                "solar": 16383,
+                "payload": 0,
+                "other1": 16383,
+                "other2": 0,
+                "other3": 16383,
+                "other4": 0,
+                "other5": 16383
+                },
             "counts": [1,100,1000,10000,100000,1000000,1000000],
             "safeMode": True,
             "powerSave": False,
@@ -141,7 +178,7 @@ class TestHorusBinaryV3_0(unittest.TestCase):
         # Test that the 3rd revision can read the third encoded
         extended_more_data = dict(extended_data)
         extended_more_data["testExtend3"] = 99
-        self.maxDiff = 2000
+        
         extended_more_encoded = extended_more_uper.encode("Telemetry",extended_more_data)
         extended_more_decoded = extended_more_uper.decode("Telemetry",extended_more_encoded)
         self.assertDictEqual(extended_more_data, extended_more_decoded)
@@ -178,13 +215,31 @@ class TestHorusBinaryV3_0(unittest.TestCase):
             "latitude": 90,
             "longitude": -180,
             "altitudeMeters": 50000,
-            "velocityHorizontalMetersPerSecond": 255,
+            "velocityHorizontalKilometersPerHour": 255,
             "gnssSatellitesVisible": 31,
             "ascentRateCentimetersPerSecond": 32767,
             "pressurehPa": 127,
-            "temperatureCelsius": [-127,127,-127,127,-127,127,-127,127],
+            "temperatureCelsius": {
+                "internal": -127,
+                "external": 127,
+                "other1": -127,
+                "other2": 127,
+                "other3": -127,
+                "other4": 127,
+                "other5": -127,
+                "other6": 127
+            },
             "humidityPercentage":[0,100,0,100,0,100,0,100],
-            "milliVolts": [0,16383,0,16383,0,16383,0,16383],
+            "milliVolts": {
+                "battery": 0,
+                "solar": 16383,
+                "payload": 0,
+                "other1": 16383,
+                "other2": 0,
+                "other3": 16383,
+                "other4": 0,
+                "other5": 16383
+                },
             "counts": [1,100,1000,10000,100000,1000000,1000000],
             "safeMode": True,
             "powerSave": False,
@@ -209,7 +264,7 @@ class TestHorusBinaryV3_0(unittest.TestCase):
                 }
             ],
         }
-        decoded = self.uper.decode("Telemetry", bytes.fromhex("7fff4b34e71e8000841892cd381ffff51810380012d03c0022dc738f9a462a488314918a9220c52462a48832808080816535c5c2085ffd06c81124509952c50a962e18388101c4ab7ab963568b1eae62d84c0640fcb923a29c77984c000811833c3eeadce84c0640fcb923a29c77984c000811833c3eeadcefffffff83ff00fe00fe00fe00fee03200c803200c9c000fffc000fffc000fffc000ffff008080b20101f40113880180c3500187a1200187a12050"))
+        decoded = self.uper.decode("Telemetry", bytes.fromhex("7fff4b34e71e8000841892cd381ffff51810380012d03c0022dc738f9a462a488314918a9220c52462a48832808080816535c5c2085ffd06c81124509952c50a962e18388101c4ab7ab963568b1eae62d84c0640fcb923a29c77984c000811833c3eeadce84c0640fcb923a29c77984c000811833c3eeadce9ffffffe0fffe01fc01fc01fc01fdc06401900640193fc000fffc000fffc000fffc000ffff008080b20101f40113880180c3500187a1200187a1205"))
 
         self.assertDictEqual(data, decoded)
 
@@ -229,8 +284,11 @@ class TestHorusBinaryV3_0(unittest.TestCase):
                 "altitudeMeters": data['alt'],
 
                 "gnssSatellitesVisible": data['sats'],
-                "temperatureCelsius": [int(data['temp']), int(data['ext_temperature'])],
-                "milliVolts": [int(data['batt']*1000)],
+                "temperatureCelsius": {
+                    "internal": int(data['temp']), 
+                    "external": int(data['ext_temperature'])
+                },
+                "milliVolts": {"battery": int(data['batt']*1000)},
                 "humidityPercentage": [data['ext_humidity']],
                 "ascentRateCentimetersPerSecond": int(data["ascent_rate"]*100),
                 "pressurehPa": int(data['ext_pressure'])
@@ -247,9 +305,9 @@ class TestHorusBinaryV3_0(unittest.TestCase):
             self.assertEqual(decoded["payloadCallsign"],data['payload_callsign'])
             self.assertEqual(decoded["latitude"],data['lat'])
             self.assertEqual(decoded["longitude"],data['lon'])
-            self.assertEqual(decoded["temperatureCelsius"][0],data['temp'])
+            self.assertEqual(decoded["temperatureCelsius"]["internal"],data['temp'])
             self.assertEqual(decoded["ascentRateCentimetersPerSecond"],int(data["ascent_rate"]*100))
-            self.assertEqual(decoded["milliVolts"][0],int(data['batt']*1000))
+            self.assertEqual(decoded["milliVolts"]["battery"],int(data['batt']*1000))
             self.assertLess(len(encoded),48)
             logging.debug(f"Length: {len(encoded)} Data: {encoded.hex()}")
         logging.debug(f"Max length was {max_length}")
