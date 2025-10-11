@@ -59,7 +59,7 @@ These fields are optional, and store only a single value.
 | velocityHorizontalMetersPerSecond | 0-255 | Horizontal velocity in m/s|
 | ascentRateCentimetersPerSecond | -32767 - 32767 | Ascent rate in centimeters per second. Centimeters is used here to avoid using a REAL which takes up 2 bytes. |
 | gnssSatellitesVisible | 0 - 31 | Number of satellites the payload can see. This figure should not roll over. |
-| pressurekPa | 0 - 127 | Atmospheric pressure in kPa |
+| pressurehPa | 0 - 1200 | Atmospheric pressure in hPa |
 | - | - | - |
 | safeMode | `true`/`false` | Payload is currently in a safe mode state |
 | powerSave | `true`/`false` | Payload or GPS is in power saving mode |
@@ -68,11 +68,27 @@ These fields are optional, and store only a single value.
 #### Built-in Multi Value Fields
 Each of these fields can have up to 8 values. When sending multiple values, ensure that the values remain in order/index.
 
-| Field Name | Constraint | Description |
-| -- | -- | -- |
-| temperatureCelsius | -127 - 127 | Sensor temperature in Celsius |
+| Field Name | Sub Field name| Constraint | Description |
+| -- | -- | -- | -- |
+| temperatureCelsius |  |  |
+| -                  | internal | -127 - 127 | Sensor temperature in Celsius |
+| -                  | external | -127 - 127 | Sensor temperature in Celsius |
+| -                  | other1  | -127 - 127 | Sensor temperature in Celsius |
+| -                  | other2  | -127 - 127 | Sensor temperature in Celsius |
+| -                  | other3  | -127 - 127 | Sensor temperature in Celsius |
+| -                  | other4  | -127 - 127 | Sensor temperature in Celsius |
+| -                  | other5  | -127 - 127 | Sensor temperature in Celsius |
+| -                  | other6  | -127 - 127 | Sensor temperature in Celsius |
 | humidityPercentage | 0 - 100 | Humidity in percentage |
-| milliVolts | 0 - 16383 | Voltage in milliVolts |
+| milliVolts | |
+| -          | battery | 0 - 16383 | Voltage in milliVolts |
+| -          | solar | 0 - 16383 | Voltage in milliVolts |
+| -          | payload | 0 - 16383 | Voltage in milliVolts |
+| -          | other1 | 0 - 16383 | Voltage in milliVolts |
+| -          | other2 | 0 - 16383 | Voltage in milliVolts |
+| -          | other3 | 0 - 16383 | Voltage in milliVolts |
+| -          | other4 | 0 - 16383 | Voltage in milliVolts |
+| -          | other5 | 0 - 16383 | Voltage in milliVolts |
 | counts | Integer (unbounded) | Something that needs counting, like a radiation sensor |
 
 #### Custom sensors (extraSensors)
