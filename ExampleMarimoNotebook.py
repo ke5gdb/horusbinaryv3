@@ -182,7 +182,7 @@ def _(HorusBinaryV3, asn1tools, builder, data, drawer, mo, parser):
                 self.last_frame=inspect.stack()[2]
                 _str = ""
                 if 'data' in calling_frame:
-                    if type(calling_frame['data']) in [str,int]:
+                    if type(calling_frame['data']) in [str,int, float]:
                         _str = str(calling_frame['data'])
                     elif type(calling_frame['data']) in [bytes, bytearray]:
                         _str = calling_frame['data'].hex()
