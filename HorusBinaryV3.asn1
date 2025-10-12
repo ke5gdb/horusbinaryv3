@@ -55,11 +55,12 @@ Telemetry ::= SEQUENCE {
     sequenceNumber      [2] EXPLICIT INTEGER (0..65535),
 
     -- these are common fields that are required to transmit
-    -- however if the data is missing, transmit inf for lat/lon and timeofdayseconds -1
+    -- however if the data is missing, transmit 0,0 for lat/lon and timeofdayseconds -1
     timeOfDaySeconds        [3] EXPLICIT INTEGER (-1..86400), -- seconds since
                                                                -- 00:00 UTC - highly recommended to have time of day seconds in very transmissions
-    latitude                [4] EXPLICIT REAL (-90..90) , 
-    longitude               [5] EXPLICIT REAL (-180..180),
+    latitude                [4] EXPLICIT INTEGER (-9000000..9000000),    -- fixed point, x100000
+    longitude               [5] EXPLICIT INTEGER (-18000000..18000000),  -- fixed point, x100000
+
 
         -- bits - these mostly came from rs41 ng                   - set to zero if not in use
     safeMode                   [6] EXPLICIT BOOLEAN OPTIONAL,

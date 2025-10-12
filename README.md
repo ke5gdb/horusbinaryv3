@@ -49,8 +49,8 @@ This fields are required to be transmitted/encoded
 | payloadCallsign | 1 to 15 characters : `a-z`,`A-Z`,`0-9`,`-` | Payload callsign | 
 | sequenceNumber | 0 - 65535 | Every transmission this number should increment. It should never go backwards (apart from rollover). It's expected to roll over at 65535 |
 | timeOfDaySeconds | -1 - 86400 | This is the time since midnight UTC. If for some reason this is unknown, this should be set to -1 |
-| latitude | -90 - 90 | The payloads current latitude - if this is not known send inf | 
-| longitude | -180..180 | The payloads current longitude - if this is not known send inf | 
+| latitude | -9000000 - 9000000 | The payloads current latitude - if this is not known send inf ** These values are *100000 to provide fixed point values ** | 
+| longitude | -18000000..18000000 | The payloads current longitude - if this is not known send inf ** These values are *100000 to provide fixed point values ** | 
 | altitudeMeters | -1000 - 50000 | If the altitude is not known, transmit -1000 |
 
 **Explanatory notes:** While timeOfDaySeconds, latitude, longitude, altitudeMeters could have been marked as optional in the ASN.1 definition, doing so would cause a bit to be used for each field. Since the majority of payloads will be sending this data making them required allows us to save some space.

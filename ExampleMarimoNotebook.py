@@ -32,7 +32,6 @@ def _(mo):
     except:
         ASN1_DEF = open(str(mo.notebook_location() / "public" / "HorusBinaryV3.asn1"),"r").read()
     from packetdiag import parser, builder, drawer
-
     return ASN1_DEF, builder, drawer, parser
 
 
@@ -58,8 +57,8 @@ def _(ASN1_DEF, mo):
         "sequenceNumber": 1234,
 
         "timeOfDaySeconds": 9001,
-        "latitude": 123.945893903,
-        "longitude": -23.344589499,
+        "latitude": 89_94589,
+        "longitude": -23_34458,
         "altitudeMeters": 23000,
 
         "velocityHorizontalKilometersPerHour": 200,
@@ -253,13 +252,13 @@ def _(HorusBinaryV3, asn1tools, builder, data, drawer, mo, parser):
     try:
         tree = parser.parse_string(lines)
         diagram = builder.ScreenNodeBuilder(tree)
-    
+
         draw = drawer.DiagramDraw("SVG", diagram.build(tree),
                                           ignore_pil=True)
         draw.draw()
         import base64
         output_64 = base64.b64encode(draw.save().encode()).decode()
-    
+
     except Exception as e:
         cellout = mo.inspect(e).callout("danger")
         mo.stop(True, cellout)

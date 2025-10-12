@@ -15,8 +15,8 @@ class TestHorusBinaryV3_0(unittest.TestCase):
             "payloadCallsign": "abcDEF-0123abc-",
             "sequenceNumber": 65535,
             "timeOfDaySeconds": 86400,
-            "latitude": 90,
-            "longitude": -180,
+            "latitude": 9000000,
+            "longitude": -18000000,
             "altitudeMeters": 50000,
             "velocityHorizontalKilometersPerHour": 255,
             "gnssSatellitesVisible": 31,
@@ -72,8 +72,8 @@ class TestHorusBinaryV3_0(unittest.TestCase):
             "payloadCallsign": "abcDEF-0123abc-",
             "sequenceNumber": 65535,
             "timeOfDaySeconds": 86400,
-            "latitude": 90,
-            "longitude": -180,
+            "latitude": 9000000,
+            "longitude": -18000000,
             "altitudeMeters": 50000,
             "velocityHorizontalKilometersPerHour": 255,
             "gnssSatellitesVisible": 31,
@@ -179,8 +179,8 @@ class TestHorusBinaryV3_0(unittest.TestCase):
             "payloadCallsign": "abcDEF-0123abc-",
             "sequenceNumber": 65535,
             "timeOfDaySeconds": 86400,
-            "latitude": 90,
-            "longitude": -180,
+            "latitude": 9000000,
+            "longitude": -18000000,
             "altitudeMeters": 50000,
             "safeMode": True,
             "powerSave":False,
@@ -201,8 +201,8 @@ class TestHorusBinaryV3_0(unittest.TestCase):
             "payloadCallsign": "abcDEF-0123abc-",
             "sequenceNumber": 65535,
             "timeOfDaySeconds": 86400,
-            "latitude": 90,
-            "longitude": -180,
+            "latitude": 9000000,
+            "longitude": -18000000,
             "altitudeMeters": 50000,
             "velocityHorizontalKilometersPerHour": 255,
             "gnssSatellitesVisible": 31,
@@ -247,7 +247,7 @@ class TestHorusBinaryV3_0(unittest.TestCase):
                 }
             ],
         }
-        decoded = self.uper.decode("Telemetry", bytes.fromhex("7fffa59a738f4000420c49669c0ffffa8c081c0009681e00116dc738f9a462a488314918a9220c52462a48832808080816535c5c2085ffd06c81124509952c50a962e18388101c4ab7ab963568b1eae62d84c0640fcb923a29c77984c000811833c3eeadce84c0640fcb923a29c77984c000811833c3eeadce9ffffffe0ffe01fc01fd80c803278001fff8001fffe010101640203e8022710030186a0030f4240030f4240086d656f776d656f770"))
+        decoded = self.uper.decode("Telemetry", bytes.fromhex("7fffa59a738f4000420c49669c0ffffa8c0c4aa200000000b8e71f348c54910629231524418a48c549106501010102ca6b8b8410bffa0d902248a132a58a152c5c307102038956f572c6ad163d5cc5b0980c81f972474538ef309800102306787dd5b9d0980c81f972474538ef309800102306787dd5b9d3ffffffc1ffc03f803fb0190064f0003fff0003fffc020202c80407d0044e2006030d40061e8480061e848010dacadeeedacadeee"))
 
         self.assertDictEqual(data, decoded)
 
@@ -262,8 +262,8 @@ class TestHorusBinaryV3_0(unittest.TestCase):
                 "payloadCallsign": data['payload_callsign'],
                 "sequenceNumber": data['frame'],
                 "timeOfDaySeconds": seconds,
-                "latitude": data['lat'],
-                "longitude": data['lon'],
+                "latitude": int(data['lat']*10_0000),
+                "longitude": int(data['lon']*10_0000),
                 "altitudeMeters": data['alt'],
 
                 "gnssSatellitesVisible": data['sats'],
@@ -289,8 +289,8 @@ class TestHorusBinaryV3_0(unittest.TestCase):
             self.assertEqual(decoded["altitudeMeters"],data['alt'])
             self.assertEqual(decoded["timeOfDaySeconds"],seconds)
             self.assertEqual(decoded["payloadCallsign"],data['payload_callsign'])
-            self.assertEqual(decoded["latitude"],data['lat'])
-            self.assertEqual(decoded["longitude"],data['lon'])
+            self.assertEqual(decoded["latitude"],int(data['lat']*10_0000))
+            self.assertEqual(decoded["longitude"],int(data['lon']*10_0000))
             self.assertEqual(decoded["temperatureCelsius"]["internal"],data['temp'])
             self.assertEqual(decoded["ascentRateCentimetersPerSecond"],int(data["ascent_rate"]*100))
             self.assertEqual(decoded["milliVolts"]["battery"],int(data['batt']*1000))
