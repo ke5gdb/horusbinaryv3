@@ -36,10 +36,10 @@ AdditionalSensorType ::= SEQUENCE {
 AdditionalSensors ::= SEQUENCE(SIZE(1..4)) OF AdditionalSensorType
 
 TemperatureSensors ::= SEQUENCE {
-    internal [0] EXPLICIT INTEGER (-127..127) OPTIONAL, -- C
-    external [1] EXPLICIT INTEGER (-127..127) OPTIONAL, -- C
-    custom1   [2] EXPLICIT INTEGER (-127..127) OPTIONAL, -- C
-    custom2   [3] EXPLICIT INTEGER (-127..127) OPTIONAL -- C
+    internal [0] EXPLICIT INTEGER (-1023..1023) OPTIONAL,  -- tenths C
+    external [1] EXPLICIT INTEGER (-1023..1023) OPTIONAL,  -- tenths C
+    custom1   [2] EXPLICIT INTEGER (-1023..1023) OPTIONAL, -- tenths C
+    custom2   [3] EXPLICIT INTEGER (-1023..1023) OPTIONAL  -- tenths C
 }
 
 MilliVoltSensors ::= SEQUENCE {
@@ -51,7 +51,7 @@ MilliVoltSensors ::= SEQUENCE {
 
 Telemetry ::= SEQUENCE {
     -- required fields
-    payloadCallsign     [1] EXPLICIT IA5String (FROM("-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")^SIZE (1..15)),
+    payloadCallsign     [1] EXPLICIT IA5String (FROM("-/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")^SIZE (1..15)),
     sequenceNumber      [2] EXPLICIT INTEGER (0..65535),
 
     -- these are common fields that are required to transmit
@@ -83,7 +83,7 @@ Telemetry ::= SEQUENCE {
 
     -- additional but fairly common fields so we make them explicit
     temperatureCelsius         [15] EXPLICIT TemperatureSensors   OPTIONAL, -- C
-    humidityPercentage         [16] EXPLICIT SEQUENCE(SIZE(1..4)) OF INTEGER (0..100)     OPTIONAL, -- %
+    humidityPercentage         [16] EXPLICIT INTEGER (0..100)     OPTIONAL, -- %
     milliVolts                 [17] EXPLICIT MilliVoltSensors     OPTIONAL, -- 
     counts                     [18] EXPLICIT SEQUENCE(SIZE(1..8)) OF INTEGER OPTIONAL,
     
