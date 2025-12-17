@@ -168,29 +168,34 @@ Names of sensors don't need to sent all the time, these can be sent occasionally
 ```python
 import asn1tools
 uper = asn1tools.compile_files("./HorusBinaryV3.asn1", codec="uper")
-data = {
+data =  {
     "payloadCallsign": "VK3FUR",
     "sequenceNumber": 1234,
 
     "timeOfDaySeconds": 9001,
-    "latitude": 123.945893903,
-    "longitude": -23.344589499,
+    "latitude": 89_94589,
+    "longitude": -23_34458,
     "altitudeMeters": 23000,
-    
-    "velocityHorizontalMetersPerSecond": 200,
+
+    "velocityHorizontalKilometersPerHour": 200,
     "gnssSatellitesVisible": 18,
 
-    "temperatureCelsius": [-120, 20], # additional temperature field
-    "milliVolts": [2300],
+    "temperatureCelsius": {
+        "internal": 100,
+        "external": 200
+    },
+    "milliVolts": {
+        "battery": 2300
+    },
 
     "ascentRateCentimetersPerSecond": 1080,
-    "humidityPercentage": [10],
+    "humidityPercentage": 10,
 
     "extraSensors": [
         {
             "name": "rad", 
-            "values": ("horusInt", [1,2,3]) 
-        },
+            "values": ("horusInt", [1,2,3])
+        }
     ],
 
     "safeMode": True,
@@ -204,8 +209,8 @@ print(f"bytes  uper: {len(binary_output_uper)}")
 ```
 Output:
 ```
-hex uper: 7bbac0a8883ee026908ca82603487bf2261a52deec2703442eb06e08e980057700c4e1673008080810081e44a10dc83c981408fce0
-bytes  uper: 53
+hex uper: 7f7161585460741348465512935d3bc261baee0189c2ce60101010201033225086f918e638a823f0
+bytes  uper: 40
 ```
 
 Decoding:
@@ -216,22 +221,39 @@ uper.decode('Telemetry',binary_output_uper)
 Output:
 ```
 {
- 'payloadCallsign': 'VK3FUR',
- 'sequenceNumber': 1234,
- 'timeOfDaySeconds': 9001,
- 'latitude': 123.945893903,
- 'longitude': -23.344589499,
- 'altitudeMeters': 23000,
- 'extraSensors': [{'name': 'rad', 'values': ('horusInt', [1, 2, 3])}],
- 'velocityHorizontalMetersPerSecond': 200,
- 'gnssSatellitesVisible': 18,
- 'ascentRateCentimetersPerSecond': 1080,
- 'temperatureCelsius': [-120, 20],
- 'humidityPercentage': [10],
- 'milliVolts': [2300],
- 'safeMode': True,
- 'powerSave': True,
- 'gpsLock': True
+  "payloadCallsign": "VK3FUR",
+  "sequenceNumber": 1234,
+  "timeOfDaySeconds": 9001,
+  "latitude": 8994589,
+  "longitude": -2334458,
+  "safeMode": true,
+  "powerSave": true,
+  "gpsLock": true,
+  "altitudeMeters": 23000,
+  "extraSensors": [
+    {
+      "name": "rad",
+      "values": [
+        "horusInt",
+        [
+          1,
+          2,
+          3
+        ]
+      ]
+    }
+  ],
+  "velocityHorizontalKilometersPerHour": 200,
+  "gnssSatellitesVisible": 18,
+  "ascentRateCentimetersPerSecond": 1080,
+  "temperatureCelsius": {
+    "internal": 100,
+    "external": 200
+  },
+  "humidityPercentage": 10,
+  "milliVolts": {
+    "battery": 2300
+  }
 }
 ```
 
