@@ -62,6 +62,7 @@ These fields are optional, and store only a single value.
 | velocityHorizontalKilometersPerHour | 0-512 | Horizontal velocity in m/s|
 | ascentRateCentimetersPerSecond | -32767 - 32767 | Ascent rate in centimeters per second. Centimeters is used here to avoid using a REAL which takes up 2 bytes. |
 | gnssSatellitesVisible | 0 - 31 | Number of satellites the payload can see. This figure should not roll over. |
+| humidityPercentage | 0 - 100 | Humidity in percentage |
 | pressurehPa | 0 - 1200 | Atmospheric pressure in hPa |
 | customData | OCTET STRING (aka bytes) | Used to encode binary data. Won't be presented on SondeHub but will be recorded |
 | - | - | - |
@@ -75,11 +76,10 @@ Each of these fields can have several values. When sending multiple values, ensu
 | Field Name | Sub Field name| Constraint | Description |
 | -- | -- | -- | -- |
 | temperatureCelsius |  |  |
-| -                  | internal | -127 - 127 | Sensor temperature in Celsius |
-| -                  | external | -127 - 127 | Sensor temperature in Celsius |
-| -                  | custom1  | -127 - 127 | Sensor temperature in Celsius |
-| -                  | custom2  | -127 - 127 | Sensor temperature in Celsius |
-| humidityPercentage (max 4) | 0 - 100 | Humidity in percentage |
+| -                  | internal | -1023 - 1023 | Sensor temperature in Celsius ** value *10 ** |
+| -                  | external | -1023 - 1023 | Sensor temperature in Celsius ** value *10 ** |
+| -                  | custom1  | -1023 - 1023 | Sensor temperature in Celsius ** value *10 ** |
+| -                  | custom2  | -1023 - 1023 | Sensor temperature in Celsius ** value *10 ** |
 | milliVolts | |
 | -          | battery | 0 - 16383 | Voltage in milliVolts |
 | -          | solar | 0 - 16383 | Voltage in milliVolts |
