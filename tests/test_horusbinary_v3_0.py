@@ -29,7 +29,7 @@ class TestHorusBinaryV3_0(unittest.TestCase):
                 "custom2": 127,
                 
             },
-            "humidityPercentage":[0,100,0,100],
+            "humidityPercentage": 42,
             "milliVolts": {
                 "battery": 0,
                 "solar": 16383,
@@ -37,9 +37,7 @@ class TestHorusBinaryV3_0(unittest.TestCase):
                 "custom2": 16383,
                 },
             "counts": [1,100,1000,10000,100000,1000000,1000000],
-            "safeMode": True,
-            "powerSave": False,
-            "gpsLock": True,
+            "gnssPowerSaveState": 0,
 
             "extraSensors": [
                 {
