@@ -84,7 +84,7 @@ class TestHorusBinaryV3_0(unittest.TestCase):
                 "custom2": 127,
                 
             },
-            "humidityPercentage":[0,100,0,100],
+            "humidityPercentage": 31,
             "milliVolts": {
                 "battery": 0,
                 "solar": 16383,
@@ -92,9 +92,7 @@ class TestHorusBinaryV3_0(unittest.TestCase):
                 "custom2": 16383,
                 },
             "counts": [1,100,1000,10000,100000,1000000,1000000],
-            "safeMode": True,
-            "powerSave": False,
-            "gpsLock": True,
+            "gnssPowerSaveState": 4,
 
             "extraSensors": [
                 {
@@ -213,7 +211,7 @@ class TestHorusBinaryV3_0(unittest.TestCase):
                 "custom2": 127,
                 
             },
-            "humidityPercentage":[0,100,0,100],
+            "humidityPercentage": 13,
             "milliVolts": {
                 "battery": 0,
                 "solar": 16383,
@@ -245,7 +243,7 @@ class TestHorusBinaryV3_0(unittest.TestCase):
                 }
             ],
         }
-        decoded = self.uper.decode("Telemetry", bytes.fromhex("7fffa59a738f4000420c49669c0ffffa8c0c4aa200000000b8e71f348c54910629231524418a48c549106501010102ca6b8b8410bffa0d902248a132a58a152c5c307102038956f572c6ad163d5cc5b0980c81f972474538ef309800102306787dd5b9d0980c81f972474538ef309800102306787dd5b9d3ffffffc1ffc03f803fb0190064f0003fff0003fffc020202c80407d0044e2006030d40061e8480061e848010dacadeeedacadeee"))
+        decoded = self.uper.decode("Telemetry", bytes.fromhex("3ffe9a7a0f4110020c41669e803fffea30312a88000000031ce3e6918a9220c52462a488314918a9220ca0202020594d71708217ff41b20449142654b142a58b860e2040712adeae58d5a2c7ab98b61301903f2e48e8a71de61300020460cf0fbab73a1301903f2e48e8a71de61300020460cf0fbab73a7ffffff83ffb808fce023f0df0003fff0003fffc020202c80407d0044e2006030d40061e8480061e848010dacadeeedacadeee"))
 
         self.assertDictEqual(data, decoded)
 
@@ -270,12 +268,10 @@ class TestHorusBinaryV3_0(unittest.TestCase):
                     "external": int(data['ext_temperature'])
                 },
                 "milliVolts": {"battery": int(data['batt']*1000)},
-                "humidityPercentage": [data['ext_humidity']],
+                "humidityPercentage": data['ext_humidity'],
                 "ascentRateCentimetersPerSecond": int(data["ascent_rate"]*100),
                 "pressurehPa": int(data['ext_pressure']),
-                "safeMode": True,
-                "powerSave":False,
-                "gpsLock": False
+                "gnssPowerSaveState": 0,
             }
             encoded = self.uper.encode("Telemetry",to_encode)
             if len(encoded) > max_length:
